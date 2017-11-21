@@ -1,0 +1,19 @@
+<template name="broadband">
+    <div class="form-group">
+        <label class="control-label col-sm-2">
+            Country
+        </label>
+        <div class="col-sm-3">
+            {{#if countries}}
+            <select class="form-control beam-country">
+                <option value="">Select country</option>
+                {{#each countries}}
+                <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select>
+            {{else}}
+            <p class="form-control-static">There is no country data for this satellite.</p>
+            {{/if}}
+        </div>
+    </div>
+</template>

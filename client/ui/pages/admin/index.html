@@ -1,0 +1,83 @@
+<template name="adminIndex">
+    <div class="page-header">
+        <h1>Admin Configuration</h1>
+    </div>
+    <div class="row">
+        <h4>Admin List (Can authorize user and promote authroized users to admin)</h4>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>BU</th>
+                    <th>DP</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each admin in admins}}
+                    <tr>
+                        <td>{{admin.username}}</td>
+                        <td>{{admin.fullName}}</td>
+                        <td>{{admin.bu}}</td>
+                        <td>{{admin.dp}}</td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <h4>Authorized Users (Can view all Thaicom satellite contours)</h4>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>BU</th>
+                <th>DP</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each user in authorizedUsers}}
+                <tr>
+                    <td>{{user.username}}</td>
+                    <td>{{user.fullName}}</td>
+                    <td>{{user.bu}}</td>
+                    <td>{{user.dp}}</td>
+                    {{#if user.isAdmin}}
+                         <td>Already Admin</td>
+                    {{else}}
+                        <td><button class="btn btn-primary" value="{{user.username}}" {{b "click: makeAdmin"}}>Make Admin</button></td>
+                    {{/if}}
+
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <h4>Unauthorized Users (Cannot view any Thaicom satellite contours unless authorized by admins)</h4>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>BU</th>
+                <th>DP</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each user in unauthorizedUsers}}
+                <tr>
+                    <td>{{user.username}}</td>
+                    <td>{{user.fullName}}</td>
+                    <td>{{user.bu}}</td>
+                    <td>{{user.dp}}</td>
+                    <td><button class="btn btn-primary" value="{{user.username}}" {{b "click: authorize"}}>Authorize</button></td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+</template>

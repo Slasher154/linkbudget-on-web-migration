@@ -1,0 +1,27 @@
+{
+  "public": {
+    "createDummyAdmin": false,
+    "bypassAuthenForFirstUser": false,
+    "dummyPassword": "abcd1234",
+    "googleMaps": {
+      "apiKey": "AIzaSyDthuAAkP9IYaN7Cr8M32fYk6-O_adwD2k"
+    }
+  },
+  "private": {
+    "thaicomOauth": {
+      "IP_Address": "172.18.11.105",
+      "System": "CTG",
+      "APIKey": "8CA88235-66E3-4481-B34B-33A2C8C38BC0"
+    },
+    "dummyAdmin": {
+      "bu": "BU-SEN",
+      "dp": "DP-CS",
+      "email": "thanatv@thaicom.net",
+      "gender": "M",
+      "firstName": "Thanat",
+      "lastName": "Varathon",
+      "position": "EN",
+      "image": ""
+    }
+  }
+}

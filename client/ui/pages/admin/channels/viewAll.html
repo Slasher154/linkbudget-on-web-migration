@@ -1,0 +1,43 @@
+<template name="channelViewAll">
+    <h1>All channels</h1>
+    <div>
+        <h3>Select satellite</h3>
+        <select id="satellite" class="form-control">
+            {{#each satellites}}
+                <option value="{{value}}">{{text}}</option>
+            {{/each}}
+        </select>
+    </div>
+    <br>
+    {{#databaseTable rows=tableRows}}
+    {{#each channels}}
+    <tr>
+        <td>{{name}}</td>
+        <td>{{uplink_cf}}</td>
+        <td>{{downlink_cf}}</td>
+        <td>{{bandwidth}}</td>
+        <td>{{uplink_beam}}</td>
+        <td>{{downlink_beam}}</td>
+        <td>{{uplink_pol}}</td>
+        <td>{{downlink_pol}}</td>
+        <td>{{saturated_eirp_peak}}</td>
+        <td>{{gt_peak}}</td>
+        <td>{{transponder}}</td>
+        <td>{{mode}}</td>
+        <td>{{sfd}}</td>
+        <td>{{dynamic_range}}</td>
+        <td>{{designed_deepin}}</td>
+        <td>{{atten_range}}</td>
+        <td>{{default_atten}}</td>
+        <td>{{current_num_carriers}}</td>
+        <td>
+            <ul>
+            {{#each backoff_settings}}
+                <li>{{num_carriers}} /{{ibo}} /{{obo}} /{{intermod}}</li>
+            {{/each}}
+                </ul>
+        </td>
+    </tr>
+    {{/each}}
+    {{/databaseTable}}
+</template>

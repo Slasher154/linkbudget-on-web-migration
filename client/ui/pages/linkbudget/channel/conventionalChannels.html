@@ -1,0 +1,10 @@
+<template name="conventionalChannels">
+    <div class="form-group">
+        {{#if channels}}
+        <label class="control-label col-sm-2">Channels</label>
+        <div class="col-sm-10 channel-picker conventionalChannels">
+            {{> radioButtonGroups channels}}
+        </div>
+        {{/if}}
+    </div>
+</template>

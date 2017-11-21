@@ -1,0 +1,15 @@
+<template name="broadbandChannels">
+    {{#if isCountrySelected}}
+    {{#if findBestChannel}}
+    {{else}} <!-- Show the button group selection if the find best channel option is not ticked -->
+    <div class="form-group">
+        <label class="control-label col-sm-2">Channels</label>
+        <div class="col-sm-10 channel-picker" id="broadbandChannels">
+            {{> checkboxButtonGroups channels}}
+        </div>
+
+    </div>
+    {{/if}}
+    {{> findBestChannel}}
+    {{/if}}
+</template>

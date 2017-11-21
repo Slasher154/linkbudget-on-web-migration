@@ -1,0 +1,13 @@
+<template name="modemSelector">
+    <div class="form-group">
+        <label>Select Modem</label>
+        <select id="modemPicker" class="form-control col-sm-3">
+            <!-- Modem selector is rendered in the js script -->
+
+        </select>
+    </div>
+    {{#if isModemSelected}}
+    {{> modemDetails}}
+    {{> modemSelectMcg}}
+    {{/if}}
+</template>

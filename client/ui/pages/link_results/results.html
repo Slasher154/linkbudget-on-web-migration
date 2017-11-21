@@ -1,0 +1,44 @@
+<template name="results">
+    <!-- myRequest is a subscription registered inside the result routes in the routes.js file -->
+    <!-- See more at https://github.com/arillo/meteor-flow-router-helpers -->
+    {{#if subsReady 'myRequest' 'satellites'}}
+        <!--<h1>Link budget result: {{request_name}} <a href="{{pathFor 'editRequest' _id=linkRequest._id}}" class="btn btn-success pull-right">Edit request</a></h1>-->
+        <h1>Link budget result: {{request_name}}</h1>
+
+        <!-- Requestor name -->
+        <h4><em>Requested by {{requestor_name}}</em></h4>
+        <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            This link calculation program is still in the beta version. The results displayed on this page cannot be committed as Thaicom link calculation by any means.
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                {{> resultAssumptions assumptions}}
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                {{#if isConventionalResult}}
+                <!-- the result passed to conventional template is split by adj.sat downlink interferences
+                in the template helpers -->
+                {{> conventionalResults conventionalResult}}
+                {{else}}
+                <!-- the result passed to broadband template is the same as in database (no manipulation) -->
+                {{> broadbandResults broadbandResult}}
+                {{/if}}
+            </div>
+        </div>
+        {{#if isNotEmptyArray warning_messages}}
+        <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <h6>Remarks</h6>
+            <ol>
+            {{#each linkRequest.warning_messages}}
+            <li>{{this}}</li>
+            {{/each}}
+            </ol>
+        </div>
+        {{/if}}
+        {{/if}}
+</template>

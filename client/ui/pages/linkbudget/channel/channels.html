@@ -1,0 +1,12 @@
+<template name="channels">
+    {{#if isConventional}}
+        {{> conventional}}
+        {{> conventionalChannels}}
+    {{/if}}
+    {{#if isBroadband}}
+        {{> broadband}}
+
+        {{> broadbandChannels}}
+
+    {{/if}}
+</template>

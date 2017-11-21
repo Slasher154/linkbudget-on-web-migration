@@ -1,0 +1,93 @@
+<template name="conventionalInputParameterGuide">
+    {{#markdownManual}}
+###Conventional Satellite: Input Parameter Guide
+
+![](/images/manual/conventional-input-1.png)
+![](/images/manual/conventional-input-2.png)
+
+To request a link budget, please follow these steps.
+
+1. **Input a request name**
+
+ The request name will be used as reference if you wish to view your results later. We recommend to put your project name along with some key parameters in the name.
+
+ Ex. _CDN Project in Myanmar: DVB-S2 - 2.4m - 36 MHz_
+
+2. **Select a satellite**
+
+ Pick your satellite by clicking the label. Only 1 satellite can be selected for each request. Selecting a conventional satellite will make a dropdown containing that satellite's beams to appear.
+
+3. **Select a beam**
+
+ Pick 1 beam from the dropdown. If you don't know which beam covers your desired location, please contact CND team for information. Selecting a beam will make a button group of transponders in that beam to appear.
+
+4. **Select a transponder**
+
+ Pick a transponder by clicking one of the button. Only 1 transponder can be selected per request. The main difference of each transponder in the same beam is the effect from adjacent satellite interferences.
+
+ Contact marketing team for the transponder availability information.
+
+5. **Select hub antenna size**
+
+ Put the hub antenna size in meters. Mostly, the hub antenna is our antenna at LLK station.
+
+6. **Select hub location**
+
+ Type the location name in the box showing 'Input hub location'. The choices will appear as you type. The location choices are filtered from selected beam. So, if you didn't select any beam in step 3, there would be no location appeared when you type. Only 1 hub location can be selected per request.
+
+ _The textbox will be reset if you try to input other custom location which is not one of the choices. This is because the program uses location name to search for the satellite power at that specific location from our database. Input your own location will result in an error. _
+
+7. **Select remote antenna size**
+
+ Put the remote antenna size in meters. There would be an alert if you select C-Band beam and try to input 1.8m antenna. Contact CND team if you need a C-Band link budget for an antenna size less than 1.8m.
+
+8. **Select remote location**
+
+ Type the location name in the box showing 'Input remote location'. Unlike hub location, after you select a remote location, the box will become empty and your selected location will appear under "Selected Locations" section. This grants you an ability to input more remote locations by typing in the box again.
+
+ _The textbox will be reset if you try to input other custom location which is not one of the choices. This is because the program uses location name to search for the satellite power at that specific location from our database. Input your own location will result in an error. _
+
+9. **Select platform**
+
+ You need to select either BC (1-way broadcast link) or VSAT (2-way links)
+
+ * **BC (1-way broadcast link)** - If you select BC, there would be three more steps to do.
+    * _Select either DVB-S1 or DVB-S2_. Each standard provides different set of modulation and codings. After you select the standard, the list of modulation and codings of that standard will appear with checkboxes. _Don't have your modulation and coding? Please contact CND team._
+    * _Select modulation and codings._ Tick the checkboxes in front of modulation and coding you need the program to calculate on.
+    * _Select BT Product_. Select desired BT product from the dropdown. Only 1 BT can be selected per request. If you need to calculate multiple BT, please do as separate request. If your BT is not in the list, please contact CND team.
+
+ * **VSAT (2-ways link)** - If you select VSAT, there would be three more steps to do.
+    * _Select modem._ Pick your modem from the dropdown. The modems are grouped by vendors. If your modem is not in the list, send its specification sheet with the list of modulation and codings showing their threshold Eb/No or Es/No and BT product to us. We will add the modem for you.
+    * _Select best MCG / Manual pick MCG_ - You will need to select either 'Best MCG' or 'Manual pick MCG'
+        * Best MCG - This option means _'let us select the best MCG for you'_ The program will show the best MCG which passes the required link margin.
+        * Manual pick MCG - This option means _'I will select MCG by myself and see what link margin I can get'_. Click this option will allow you to select MCG from a list.
+    * _Select link margin_ - Input the required link margin to determine if link is passed or not. CND recommends 2 dB link margin for C-Band and 5 dB link margin for Ku-Band. This link margin will be applied to both forward (hub-to-remote) and return (remote-to-hub) links.
+10. **Select bandwidth unit **
+
+ Select the unit for your bandwidth from following options: kbps, Mbps, ksps, Msps, kHz and MHz. The value will be input in the next step.
+
+11. ** Input bandwidth value **
+
+ Input the bandwidth value corresponding to the unit you select in step 10. The program will try to get the exact amount of the bandwidth in calculation. But sometimes, there would be the limitation of the modem which can do only some bandwidth sizes, so it will find the closest value to fit what you need instead. If you select BC, one box of value will be provided. If you select VSAT, 2 boxes of value will be provided for each forward and return link.
+
+12. **Submit your request**
+
+ Click submit on the bottom of the page to send the request to our server. Please check all your parameters before submit. If there are some parameters missing after submission, the program will alert you to fill those. After the request is sent to the server, there will be blue loading bar on the top of page. You will be redirected to the result page when the program finishes the calculation.
+
+
+
+
+
+
+
+
+
+    {{/markdownManual}}
+</template>
+
+
+
+
+
+
+

@@ -1,0 +1,12 @@
+<template name="selectedLocations">
+    <div class="form-group">
+        <label>Selected Locations</label>
+        <div>
+            <ul id="selected-locations">
+                {{#each selectedLocs}}
+                <li><span class="loc">{{this}}</span> <a href="#" class="removeLocation">(remove)</a></li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+</template>

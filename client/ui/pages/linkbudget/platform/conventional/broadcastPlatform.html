@@ -1,0 +1,9 @@
+<template name="broadcastPlatform">
+    <div class="form-group"><label>Select application</label>
+    <br/>
+    <div id="bcPlatformSelector">
+    {{> radioButtonGroups bcPlatformList}}</div></div>
+    {{#if isBcPlatformSelected}}
+    {{> broadcastMcgSelector}}
+    {{/if}}
+</template>

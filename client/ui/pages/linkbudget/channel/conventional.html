@@ -1,0 +1,19 @@
+<template name="conventional">
+    <div class="form-group">
+        <label class="control-label col-sm-2">
+            Beam
+        </label>
+        <div class="col-sm-3">
+            {{#if beams}}
+            <select class="form-control beam-country">
+                <option value="">Select Beam</option>
+                {{#each beams}}
+                    <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select>
+            {{else}}
+            <p class="form-control-static">There is no beam data for this satellite.</p>
+            {{/if}}
+        </div>
+    </div>
+</template>

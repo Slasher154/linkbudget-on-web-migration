@@ -1,0 +1,48 @@
+<template name="satelliteBaseForm">
+    <form class="form-horizontal" role="form">
+
+        {{#formGroup title="Name"}}
+        {{#if view_mode}}
+        {{#static}}{{name}}{{/static}}
+        {{else}}
+        <input type="text" class="form-control" id="name" placeholder="Name" value="{{name}}">
+        {{/if}}
+        {{/formGroup}}
+
+        {{#formGroup title="Orbital Slot"}}
+        {{#if view_mode}}
+        {{#static}}{{orbital_slot}}{{/static}}
+        {{else}}
+        <input type="number" min="-180" max="180" step="0.1" class="form-control" id="orbitalSlot" placeholder="Orbital Slot" value="{{orbital_slot}}">
+        <p class="help-block">This number must be between -180 and 180</p>
+        {{/if}}
+        {{/formGroup}}
+
+        {{#formGroup title="Half Station Keeping Box"}}
+        {{#if view_mode}}
+        {{#static}}{{skb}}{{/static}}
+        {{else}}
+        <input type="number" class="form-control" id="skb" placeholder="Orbital Slot" value="{{skb}}">
+        {{/if}}
+        {{/formGroup}}
+
+        {{#formGroup title="Type"}}
+        {{#if view_mode}}
+        {{#static}}{{type}}{{/static}}
+        {{else}}
+        {{> dropdown _id="type" choices=types selected=type}}
+        {{/if}}
+        {{/formGroup}}
+
+
+        {{#formGroupButton}}
+                {{#if view_mode}}
+                <a class="btn btn-primary" href="{{pathFor 'satelliteViewAll'}}">View all satellites</a>
+                <a class="btn btn-success" href="{{pathFor 'satelliteInsert'}}">Add new satellite</a>
+                {{else}}
+                <button type="submit" class="btn btn-primary">Submit</button>
+                {{/if}}
+         {{/formGroupButton}}
+
+    </form>
+</template>

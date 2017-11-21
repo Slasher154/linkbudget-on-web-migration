@@ -1,0 +1,40 @@
+<template name="location">
+
+
+    {{#if findBestChannel}}
+    {{else}}
+    <!-- Show the max contour checkbox and defined contours (50%,EOC) only if broadband antenna is selected and find best channel is not selected -->
+    {{#if isBroadband}}
+    <!-- Show the max contour checkbox only if recommend antenna and buc is not checked -->
+    {{#if recommendAntenna}}
+    {{else}}
+    {{#if recommendBuc}}
+    {{else}}
+    <!-- Disable find max contour as of now
+    {{> findMaxContour}}
+    -->
+    {{/if}}
+    {{/if}}
+    <!-- Show defined contour selection if max contour is not ticked -->
+    {{#if findMaxContour}}
+    {{else}}
+    {{> definedContour}}
+    {{/if}}
+    {{/if}}
+    {{/if}}
+    <!-- Show defined location selection if max contour is not ticked -->
+    {{#if findMaxContour}}
+    {{else}}
+    {{#if isBroadband}}
+    {{> findLocationByLatlon}}
+    {{else}}
+    {{> findLocationByName}}
+    {{/if}}
+    <!-- Show selected locations panel only if there is any selected locations -->
+    {{#if hasSelectedLocs}}
+    {{> selectedLocations}}
+    {{/if}}
+    {{/if}}
+
+
+</template>

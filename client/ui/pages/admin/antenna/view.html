@@ -1,0 +1,4 @@
+<template name="antennaView">
+    <h1>{{antenna.name}}</h1> <a class="btn btn-success" href="{{pathFor 'antennaEdit' _id=antenna._id}}">Edit</a>
+    {{> antennaBaseForm antenna}}
+</template>

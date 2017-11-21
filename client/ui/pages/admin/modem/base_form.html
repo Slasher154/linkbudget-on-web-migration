@@ -1,0 +1,208 @@
+<template name="modemBaseForm">
+    <form class="form-horizontal" role="form">
+        <!-- Modem name -->
+        {{#formGroup title="Name"}}
+        {{#if view_mode}}
+        {{#static}}{{name}}{{/static}}
+        {{else}}
+        <input type="text" class="form-control" id="name" placeholder="Name" value="{{name}}">
+        {{/if}}
+        {{/formGroup}}
+        <!-- Modem vendor -->
+        {{#formGroup title="Vendor"}}
+        {{#if view_mode}}
+        {{#static}}{{vendor}}{{/static}}
+        {{else}}
+        {{> dropdown _id="vendor" choices=vendors selected=vendor}}
+        <p class="help-block">If the vendor is not in the dropdown, add it <a href="{{pathFor 'modemVendorInsert'}}">here</a></p>
+        {{/if}}
+        {{/formGroup}}
+
+        <!-- Warning Messages -->
+        {{#if view_mode}}
+        {{#formGroup title="Warning message in link calculation results"}}
+        <ol>
+        {{#each warning_messages}}
+            <li>{{this}}</li>
+        {{/each}}
+        </ol>
+        {{/formGroup}}
+        {{else}}
+
+        {{#if isNotEmptyArray warning_messages}}
+        {{#each warning_messages}}
+            {{>warningMessagesForm text=this}}
+        {{/each}}
+        {{else}}
+            {{>warningMessagesForm text=""}}
+        {{/if}}
+        {{#formGroupButton}}
+        <button class="btn btn-success add-message">Add message</button>
+        {{/formGroupButton}}
+        {{/if}}
+
+        {{#each applications}}
+            {{> applicationBaseForm this}}
+        {{/each}}
+
+        {{#if view_mode}}
+        <a class="btn btn-primary" href="{{pathFor 'modemViewAll'}}">View all modem</a>
+        <a class="btn btn-success" href="{{pathFor 'modemInsert'}}">Add new modem</a>
+        {{else}}
+        {{#formGroupButton}}
+        <button class="btn btn-success add-app">Add another application to this modem</button>
+        {{/formGroupButton}}
+        {{#formGroupButton}}
+        <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+        {{/formGroupButton}}
+        {{/if}}
+
+    </form>
+</template>
+
+<template name="applicationBaseForm">
+    <hr>
+    {{#formGroup title="Applications"}}
+    {{#static}}{{/static}}
+    {{/formGroup}}
+    <!-- Application name -->
+    {{#formGroup title="Name"}}
+    {{#if view_mode}}
+    {{#static}}{{name}}{{/static}}
+    {{else}}
+    <input type="text" class="form-control app-name" placeholder="Application Name" value="{{name}}">
+    <p class="help-block">Ex. Outbound DVB-S2, SCPC. etc. The name will be displayed in the modem detail in the link calc input page</p>
+    {{/if}}
+    {{/formGroup}}
+    <!-- Application type (forward, return, broadcast, SCPC -->
+    {{#formGroup title="Type"}}
+    {{#if view_mode}}
+    {{#static}}{{type}}{{/static}}
+    {{else}}
+    {{> dropdown class="app-type" choices=app_types selected=type}}
+    <p class="help-block">If the first application is Broadcast/SCPC, don't add another application because it will result in a calculation bug.</p>
+    {{/if}}
+    {{/formGroup}}
+    <!-- ACM option -->
+    {{#if view_mode}}
+    {{#formGroup title="ACM"}}
+    {{#static}}
+    {{#if acm}}Available{{else}}Not available{{/if}}
+    {{/static}}
+    {{/formGroup}}
+    {{else}}
+    {{> formGroupCheckbox text="ACM" isChecked=acm class="app-acm"}}
+    {{/if}}
+    <!-- Default link margin -->
+    {{#formGroup title="Default Link Margin (dB)"}}
+    {{#if view_mode}}
+    {{#static}}{{link_margin}}{{/static}}
+    {{else}}
+    <input type="number" min="0" step="0.1" class="form-control app-link-margin" placeholder="Link margin (dB)" value="{{link_margin}}">
+    {{/if}}
+    {{/formGroup}}
+    <!-- Minimum Symbol Rate -->
+    {{#formGroup title="Minimum Symbol Rate (ksps)"}}
+    {{#if view_mode}}
+    {{#static}}{{minimum_symbol_rate}}{{/static}}
+    {{else}}
+    <input type="number" min="0" class="form-control app-min-symbol-rate" placeholder="Minimum symbol rate in ksps" value="{{minimum_symbol_rate}}">
+    {{/if}}
+    {{/formGroup}}
+    <!-- Maximum Symbol Rate -->
+    {{#formGroup title="Maximum Symbol Rate (ksps)"}}
+    {{#if view_mode}}
+    {{#static}}{{maximum_symbol_rate}}{{/static}}
+    {{else}}
+    <input type="number" min="0" class="form-control app-max-symbol-rate" placeholder="Maximum symbol rate in ksps" value="{{maximum_symbol_rate}}">
+    {{/if}}
+    {{/formGroup}}
+    <!-- Available symbol rates (display in comma separated values-->
+    {{#formGroup title="Available Symbol Rates (ksps)"}}
+    {{#if view_mode}}
+    {{#static}}{{#if isNotEmpty symbol_rates}}{{joinString symbol_rates }}{{else}}No limitation in symbol rate steps{{/if}}{{/static}}
+    {{else}}
+    <input type="text" class="form-control app-symbol-rates" placeholder="Available Symbol rates in comma separated values" value="{{joinString symbol_rates}}">
+    <p class="help-block">Ex. 128,256,512,1024,2048. If there is no limitation of symbol rates, just leave it blank.</p>
+    {{/if}}
+    {{/formGroup}}
+    <!-- Roll-off factor -->
+    {{#formGroup title="Roll-off factor"}}
+    {{#if view_mode}}
+    {{#static}}{{roll_off_factor}}{{/static}}
+    {{else}}
+    <input type="number" min="0" step="0.01" class="form-control app-roll-off-factor" placeholder="Roll off factor" value="{{roll_off_factor}}">
+    <p class="help-block">Please input one value only. Ex. 1.05 or 1.2 or 1.35</p>
+    {{/if}}
+    {{/formGroup}}
+    <!-- MCGs -->
+    {{#if view_mode}}
+        {{#formGroup title="MCG"}}
+        <table class="table table-condensed">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Spectral Efficiency (MBE) (bps/Hz)</th>
+                <th>Threshold Es/No (dB)</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each mcgs}}
+            <tr>
+                <td>{{name}}</td>
+                <td>{{spectral_efficiency}}</td>
+                <td>{{es_no}}</td>
+            </tr>
+            {{/each}}
+            </tbody>
+        </table>
+        {{/formGroup}}
+    {{else}}
+    <div class="form-group mcg-title">
+        <label  class="col-sm-2 control-label">MCG</label>
+        <div class="col-sm-4"><strong>Name</strong>
+        </div>
+        <div class="col-sm-2"><strong>Spectral Efficiency (MBE) (bps/Hz)</strong>
+        </div>
+        <div class="col-sm-2"><strong>Threshold Es/No (dB)</strong>
+        </div>
+    </div>
+    {{#each mcgs}}
+        {{> mcgBaseForm this}}
+    {{/each}}
+    {{#formGroupButton}}
+    <button class="btn btn-info add-mcg">Add MCG</button>
+    {{/formGroupButton}}
+    {{#formGroupButton}}
+    <button class="btn btn-danger remove-app">Remove this application</button>
+    {{/formGroupButton}}
+    {{/if}}
+    <hr>
+</template>
+
+<template name="mcgBaseForm">
+    <div class="form-group mcg-form">
+        <label  class="col-sm-2 control-label"></label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control mcg-name" placeholder="Name" value="{{name}}">
+        </div>
+        <div class="col-sm-2">
+            <input type="number" step="0.001" class="form-control mcg-mbe" placeholder="MBE (bps/Hz)" value="{{spectral_efficiency}}">
+        </div>
+        <div class="col-sm-2">
+            <input type="number" step="0.001" class="form-control mcg-es-no" placeholder="Es/No (dB)" value="{{es_no}}">
+        </div>
+        <div class="col-sm-2">
+            <button class="btn btn-danger remove-mcg">Remove</button>
+        </div>
+    </div>
+</template>
+
+
+<template name="warningMessagesForm">
+    <div class="form-group warning-message-form">
+        <label  class="col-sm-2 control-label">Warning message in link calculation results</label>
+        <div class="col-sm-8"><input type="text" class="form-control warning-message" placeholder="Message" value="{{text}}"></div>
+        <div class="col-sm-2"><button class="btn btn-danger remove-message">Remove</button></div>
+    </div>
+</template>

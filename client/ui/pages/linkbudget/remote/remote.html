@@ -1,0 +1,14 @@
+<template name="remote">
+    <form role="form">
+        <fieldset>
+            <legend>Remote</legend>
+            {{#if isSatelliteSelected}}
+            {{> antenna}}
+            {{#if isBroadband}} <!-- Buc selection available for broadband satellite only -->
+            {{> buc}}
+            {{/if}}
+            {{> location}}
+            {{/if}}
+        </fieldset>
+    </form>
+</template>

@@ -1,0 +1,13 @@
+<template name="platform">
+    <form role="form">
+        <fieldset>
+            <legend>Platform</legend>
+            {{#if isConventional}}
+            {{> conventionalPlatform}}
+            {{/if}}
+            {{#if isBroadband}}
+            {{> broadbandPlatform}}
+            {{/if}}
+        </fieldset>
+    </form>
+</template>

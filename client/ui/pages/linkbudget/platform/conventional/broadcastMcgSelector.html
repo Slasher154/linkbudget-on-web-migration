@@ -1,0 +1,21 @@
+<template name="broadcastMcgSelector">
+    <div class="form-group">
+        <label>Select MCG</label>
+        {{#each mcgs}}
+        <div class="checkbox bcMcg">
+            <label>
+                <input type="checkbox" name="{{this}}" value="{{this}}"> {{this}}
+            </label>
+        </div>
+        {{/each}}
+    </div>
+    <div class="form-group">
+        <label>Select BT Product</label>
+        <select id="bt-product" class="form-control col-sm-3">
+            <option value="">Select BT Product</option>
+            {{#each bt}}
+            <option value="{{this}}">{{this}}</option>
+            {{/each}}
+        </select>
+    </div>
+</template>

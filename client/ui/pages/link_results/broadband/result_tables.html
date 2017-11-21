@@ -1,0 +1,18 @@
+<template name="broadbandResults">
+    <!-- The panel for tables -->
+    <h3>Results</h3>
+    <h5>Forward Link</h5>
+
+    {{#if isNotEmpty fwd}}
+    {{> forwardResultTable fwd}}
+    {{/if}}
+
+    <h5>Return Link</h5>
+
+    {{#if isNotEmpty rtn}}
+    {{> returnResultTable rtn}}
+    {{/if}}
+
+
+    <hr>
+</template>

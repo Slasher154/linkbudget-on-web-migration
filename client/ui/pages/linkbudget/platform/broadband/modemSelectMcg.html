@@ -1,0 +1,37 @@
+<template name="modemSelectMcg">
+    {{ >selectMcgBaseForm fwd}}
+    {{ >selectMcgBaseForm rtn}}
+</template>
+
+<template name="selectMcgBaseForm">
+    <div class="form-group">
+        <label>{{label}}</label>
+        <!--
+        <select class="form-control selectpicker best-or-fix">
+            <option value="best-mcg">Give me best MCG which passes the required link margin</option>
+            <option value="fix-mcg">Manually choose MCG at clear sky to calculate</option>
+        </select>
+        -->
+        <div>
+        <label class="radio-inline">
+            <input type="radio" name="{{name}}-mcg-options" checked class="best-or-fix best-mcg" value="best-mcg"> Best MCG
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="{{name}}-mcg-options" class="best-or-fix fix-mcg"  value="fix-mcg"> Manual pick MCG
+        </label>
+        </div>
+
+    </div>
+
+    <div class="form-group mcg-checkboxes {{name}}-mcgs">
+        <label>{{label}} MCGs</label>
+        {{#each app.mcgs}}
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="{{name}}" value="{{name}}"> {{name}}
+            </label>
+        </div>
+        {{/each}}
+    </div>
+
+</template>

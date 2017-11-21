@@ -1,0 +1,60 @@
+<template name="ctuGuide">
+    {{#markdownManual}}
+## CTU - Work Instructions
+
+CTU is a document to keep track of the bandwidth usage on IPSTAR Malaysia beams (212-13H,213,214,215,216,217 & 214-2). It is developed by Measat and Thaicom to ease the process of cost estimation and recording. Each CTU generally displays the change in bandwidth usage compared to previous CTU so marketing/CR team can estimate the cost Measat has to pay.
+
+When there is a change in bandwidth usage on Malaysia beams, such as uplink new carrier or bring down the current one, Measat will generate the CTU from their Excel template, referring to the latest CTU and update the bandwidth changes. Then, they will send us an Excel CTU file, along with the frequency plan (the file called 'Existing carrier usage xxx'), and the simplified link budget if the change is to uplink new carrier.
+
+For our part, we need to review the CTU and issue CTP associated with that CTU.
+
+_Note: Only Malaysia beams utilize CTU systems._
+
+####Follow these steps to complete CTU.
+
+1. **Create the folder for new CTU and copy all CTU related files to it**
+
+ At the time of writing, we are using the shared folder N:/Dome/CTU xxxx to store all CTUs but it can be changed. Just pick the folder that our team can access. (maybe any cloud storage like dropbox). Create the folder labeled with CTU name. Copy all the files from the email into that folder.
+
+ _One CTU file can have multiple beams updated. If that's the case, CTU name will be span to the number of beams which have its bandwidth updated (FWD & RTN of same beam equals to 1 beam). Ex. CTU 001-003\_2014 means there are 3 beams updated. Each CTU has only 1 start/stop date and purpose._
+
+2. **Check the frequency changes**
+
+ Make a copy of the file 'Existing carrier usage xxx' and rename it to 'Frequency Plan CTU xxx'. Open it and view the 'log sheet' first to get an overview of the update bandwidth. After that, verify if the update is correct by comparing new and old frequency plan. We will use an Excel formula to count the bandwidth separate by beam and customer (2-dimension).
+    * Open the frequency plan file of previous CTU and go to the sheet 'Forward link'
+    * Unhide all frequency table rows in the new frequency plan.
+    * Copy the table (Cell P18:Z26) from old frequency plan and paste it to the new frequency plan at the same location.
+    * Copy the table (Cell P18:Y26) from old frequency plan and paste it at cell P29 and select paste option 'Values and source formatting' to get the value of old bandwidth
+    * Copy cell O19:020 from the old frequency plan and paste it to the same location in the new plan. Drag the formula of cell O20 to the last frequency table row. The cells will show the beam of each row.
+    * Delete the value of  bandwidth usage (column I) of the previously hidden rows (usually highlighted in black and yellow) to remove unwanted carrier.
+    The sumifs formula in the table requires the beam name and customer to be exaclty the same so you might need to correct some word in the frequency table which is slightly different from the word in the sumifs formula table, such as beam number 214-2, Majunusa, Maxis Clawback, etc.
+    * If there is a new customer, just add a new column to the sumifs table.
+    * Check the difference between old and new plan (column Z) if it is same as the log sheet.
+    * Repeat the same steps for the return link. The cell position might be a little different from the forward but the concept is the same.
+    * If both and forward link and return link are correct, go to step 3. Otherwise, inform Measat and ask for clarification.
+
+3. **Issue CTU**
+
+ * Make a copy of the file 'CTU Doucment\_MSSxxx' and rename it to 'CTU MSS xxx\_20xx (prepared)'.
+ * Open it and check bandwidth changes & start/stop date in the CTU\_FWD Link and CTU\_RTN Link if it matches the changelog in the frequency plan file.
+ * Fill in the purpose and issue date under stop date of both sheets.
+ * Copy your digital signature and paste into the first blank input under Thaicom Review and Approve section of both sheets.
+ * Save the file.
+
+4. **Issue CTP**
+ * Request CTP at http://ced.thaicom.net by ourselves. The CTP website is modified to auto-approve CTP-R for Malaysia beams by the requestor (because nobody will look at this document anyway).
+ * Create CTP as usual. The frequency plan shows the bandwidth/frequency of new carrier while the simplified link budget file will give antenna size, capacity and C/N total. The simplified link budget normally gives 3 locations so just pick the data of  50% contour.
+5. **Review CTU**
+ * Send the link to newly created CTU folder to another CSD memeber for another review. The second reviewer checks the data in the CTU and CTP.
+ * If all are correct, the second reviewer puts his digital signaure into the file, then saves and rename it into 'CTU MSS xxx\_20xx (prepared+reviewed) and inform the first reviewer.
+6.  ** Send to marketing team**
+
+ The first reviewer sends Excel CTU xxx\_20xx to marketing team (at the time of writing is P'Saha) or just reply all the CTU email from Thaicom CR-MY. (they will use digital signature also)
+
+7.  ** Send CTP to CND payload**
+    Once CTU is finished and CR-MY team send it to Measat, call DM-CSD to approve the remaining CTPs. After that, send the CTP names and links to CND and payload team.
+
+
+
+    {{/markdownManual}}
+</template>

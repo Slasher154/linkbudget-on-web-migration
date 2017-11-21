@@ -1,0 +1,6 @@
+<template name="modemView">
+    {{#if subsReady 'modem'}}
+    <h1>{{modem.name}}</h1> <a class="btn btn-success" href="{{pathFor 'modemEdit' _id=modem._id}}">Edit</a>
+    {{> modemBaseForm modem}}
+    {{/if}}
+</template>

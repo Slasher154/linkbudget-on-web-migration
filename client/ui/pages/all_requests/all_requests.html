@@ -1,0 +1,22 @@
+<template name="allRequests">
+    <h1>All link budget requests</h1>
+    {{#if subsReady 'allUserRequests'}}
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Requested Time </th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {{#each requests}}
+        <tr>
+            <td><a href="{{pathFor 'results' _id=_id}}">{{assumptions.request_name}}</a></td>
+            <td>{{toDateString requested_date}}</td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+    {{/if}}
+</template>

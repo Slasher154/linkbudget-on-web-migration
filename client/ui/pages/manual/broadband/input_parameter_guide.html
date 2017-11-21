@@ -1,0 +1,82 @@
+<template name="broadbandInputParameterGuide">
+    {{#markdownManual}}
+###IPSTAR Satellite: Input Parameter Guide
+
+![](/images/manual/ipstar-input-1.png)
+![](/images/manual/ipstar-input-2.png)
+
+To request a link budget, please follow these steps.
+
+1. **Input a request name**
+
+ The request name will be used as reference if you wish to view your results later. We recommend to put your project name along with some key parameters in the name.
+
+ Ex. _CDN Project in Myanmar: Gilat SE-II C 1.2m/1W
+
+2. **Select a satellite**
+
+ Pick your satellite by clicking the label. Only 1 satellite can be selected for each request. Selecting IPSTAR satellite will make a dropdown containing countries to appear.
+
+3. **Select a country**
+
+ Pick 1 country from the dropdown. Selecting a country make a button group of beams in that country to appear.
+
+4. **Select beam(s)**
+
+ Select one or more beams by click the label of that beam. If you don't know which beam covers your desired location, try our [maps][maps] here.
+     * **Find best channel** - You can also tick the 'Find best channel from my input location box' to auto-find the best channel for you. But it will take longer for the program to calculate the result because it has to find the best beam from all beams in that country first. _Use this option if you have 2 or more locations which belong in the different beam._
+
+5. **Default gateway**
+
+ All IPSTAR links in this program will use the default gateway so you don't have to do anything in this part. We don't support the custom IPSTAR gateways.
+
+6. **Select remote antenna size**
+
+ Select 1 or more antenna from the dropdown list.
+
+7. **Select buc size**
+
+ Select 1 or more BUC size from the dropdown list.
+
+8. **Select remote location**
+
+ You have to select either 1 of the following type of remote location (you can select both types but we don't recommend)
+
+ * **Defined Contours** - Select 1 or more defined contours by clicking on the label
+    * **Peak** - Beam peak is the location where the satellite power will be highest (downlink) and require least power to transmit to satellite (uplink). To be simple, it has the best performance throughout the beam.
+    * **50%** - Represent the 50% of the beam coverage area. Normally used to find the average performance from that beam.
+    * **EOC** - Represent EoC (Edge of Coverage) of the beam. Normally used to find the worst case performance from that beam.
+    * **EOC-2** - Represent the location beyond EoC by 2 dB. _Need more explanation_
+
+       _The defined contour selection is disabled if 'Find best channel' is selected_
+ * ** Lat,Lon location** - Type in the box under "Input Lat,Lon" with the coordinates in the format Lat,Lon (without any spaces, comma between lat & lon). The latitude must be between -90 and 90 and longtiude must be between -180 and 180. Hit enter and your lat/lon will appear under "Selected Locations" section. The box will become empty to let you input another lat/lon if you want.
+
+    _The program will calculate the result by combining all the inputs. For example, if you select Thailand beam 204 and 207, and then input 1 lat/lon location from beam 204 and 1 location from beam 207. The result will show the total of 4 cases (2x beams and 2x locations), which 2 of them are not what you want. You should select "Find best channel" option in this case. _
+
+9. **Select platform**
+
+    This is divided into 2 steps.
+    * _Select modem._ Pick your modem from the dropdown. The modems are grouped by vendors. If your modem is not in the list, send its specification sheet with the list of modulation and codings showing their threshold Eb/No or Es/No and BT product to us. We will add the modem for you.
+    * _Select best MCG / Manual pick MCG_ - You will need to select either 'Best MCG' or 'Manual pick MCG'
+        * Best MCG - This option means _'let us select the best MCG for you'_ The program will show the best MCG which passes the required link margin.
+        * Manual pick MCG - This option means _'I will select MCG by myself and see what link margin I can get'_. Click this option will allow you to select MCG from a list.
+
+    The BT product and link margin is set by the default value of that modem. (not adjustable) If you wish to use different value, please contact CSD team.
+
+10. **Select bandwidth unit **
+
+ Select the unit for your bandwidth from following options: kbps, Mbps, ksps, Msps, kHz and MHz. The value will be input in the next step.
+
+11. ** Input bandwidth value **
+
+ Input the bandwidth value corresponding to the unit you select in step 10. The program will try to get the exact amount of the bandwidth in calculation. But sometimes, there would be the limitation of the modem which can do only some bandwidth sizes, so it will find the closest value to fit what you need instead. Two boxes of value will be provided for each forward and return link. Click 'Add' to add more bandwidth values.
+
+12. **Submit your request**
+
+ Click submit on the bottom of the page to send the request to our server. Please check all your parameters before submit. If there are some parameters missing after submission, the program will alert you to fill those. After the request is sent to the server, there will be blue loading bar on the top of page. You will be redirected to the result page when the program finishes the calculation.
+
+[maps]: {{pathFor 'contours'}}
+
+
+    {{/markdownManual}}
+</template>

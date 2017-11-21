@@ -1,0 +1,155 @@
+<template name="ctpWebsiteFaqs">
+    {{#markdownManual}}
+# CTP Website FAQs
+
+###Systems
+
+* **What is the language the web is written in?**
+
+ The website is written in ASP.Net C# with MVC 4.0 Framework. We use MySQL as a database server.
+* **Which server is hosting this website?**
+
+ The physical server locates at CSD room. But it connects to LLK network logically. So, if LLK network is down (such as CACTI servers), this website would be down also. The server is connected to the internet so the website can be accessed from anywhere.
+
+* **Does the website has any backup server?**
+
+ No, it doesn't have any backup server.
+
+* **Does the website has its database backup?**
+
+ We backup the database by using Windows Task Scheduler to run the batch script to backup the database. At the time of writing, we have 2 backup schedules:
+    * Export MySQL database as dump file and copy to local drive and external harddisk daily.
+    * Copy all CTPs/CTP-Rs to local drive and external harddisk monthly.
+
+* **Other Information**
+    * UI Framework - [Bootstrap](http://getbootstrap.com/)
+    * Charts (all carrier plots) - [Highcharts](http://www.highcharts.com/)
+    * Tables - [Datatables](http://www.datatables.net/)
+
+###Accounts
+* **Do I need to create the account to use this website? Can I use Thaicom account? **
+
+ You need to [register][register] a new account by using your Thaicom email as a username. You can use any password (don't need to be the same as Thaicom account).
+
+* **My deparment is not in the list. What should I do?**
+
+ Email to ced@thaicom.net and we will add the deparment for you.
+
+* **I can't login. What happened? **
+
+ Please check if the username is your email without @thaicom.net (the email you put in when you [register][register]). Password is what you put in during registration, not a Thaicom password.
+
+* **I can't remember my password, any options?**
+
+ There is no forget password function. We recommend you to just simply [register][register] a new one.
+
+[register]: http://ced.thaicom.net/Account/Register
+
+### CTP Request
+* **Can I request both forward and return link in 1 request?**
+
+ Yes, you can. You need to click the beam button twice to generate 2 inputs and change one of them to RTN.
+
+* **After I submit the request, I get an error something about locale time....**
+
+ Most likely to be date format issue. By default, the web accepts the date in DD/MM/YYYY format but sometimes the browser accidentally switches it into MM/DD/YYYY. Try submit with date and month swapped and see if there is still an error.
+
+###For Admin
+
+* **How can I edit the database directly?**
+
+ In some case, you might need to edit the database directly because there is no user interface to handle that, please go to http://ced.thaicom.net/phpmyadmin/ Log in with username `ced` and password `ecce`
+
+* **My carrier mysteriously disappeared from the beam...**
+
+ There is some bug when we extend the carrier but the new carrier got the status 'Extended', which means it is not active anymore. So the new carrier disappeared from the system. We need to bring it back by changing the status of the carrier to 'Active'.
+
+ 1. Log in to the database.
+ 2. Select table 'ipstar' on the left panel, then select table 'carrier'
+ 3. Select tab 'SQL' on the top menu bar and run the following query (_xxx\_yyyy_ is CTP name)
+
+ `Select * from carrier join ctp on carrier.ctp_id = ctp.id where ctp.name = 'xxx_yyyy' `
+
+ This will show all carriers in xxx_yyyy. Check the status of these carriers to see if it's 'Active' or 'Reserved' or not. If not, note the carrier ID you want to update and run next command.
+
+ **Update 1 carrier: **
+ `Update carrier set status = 'Active' where id = xxxx`
+ where `xxxx` = carrier ID
+
+ **Update all carriers in CTP: ** `Update carrier join ctp on ctp.id = carrier.ctp_id set status = 'Active' where ctp.name = 'xxx_yyyy' `
+
+* **CND accidentally activated or terminated the carrier...**
+
+ Run the same query as the previous topic to set the status back to  'Active' or 'Reserved'. But to prevent confusion, we will delete the activity log of that activate/terminate also.
+
+ Run this query to delete the latest activity log of this carrier ID `xxxx`
+
+ `DELETE FROM carrieractivitylog WHERE carrier_id=xxxx ORDER BY datetime DESC LIMIT 1`
+
+ The carrier should come back and the activity log is deleted.
+
+* **Want to edit some carrier data after CTP is approved..**
+
+ Just find the carrier ID and run update query same as previous topic.
+
+* **Revise CTP but the customer cancel the revision...**
+
+ You cannot use reset CTP function in this case because it will also remove the original CTP. So you have to manually delete it from the database. We need to delete the carriers first then delete CTP.
+
+ `delete c from carrier c join ctp d on c.ctp_id = d.id where d.name = 'xxx_yyyy' and d.revision = z;`
+
+  `delete from ctp where name = 'xxx_yyyy' and revision = z;`
+
+   xxx_yyyy = CTP Name (without rev.x for the revision) and z = revision no. (rev.1 = 1)
+
+* **Include other department to create CTP**
+
+ If you want to let other department to create/review/approve CTP, add the role `ctp` to that department
+
+ 1. Log in to the database
+ 2. Select the database 'main'on the left panel, then select table 'dept'
+ 3. Find the department you want to add the CTP role, double click its record in the column role to edit the data and add `,ctp` at the end. (at the time of writing, CSD and CND are only two departments with CTP role)
+
+
+###Edit the source code and upload it to the server
+
+Following procedures describe how to edit the source code in the CTP website in the case that the problem cannot be solved by changing the database. If the instructions in the subsequenct sections say 'Open project', it refers to these steps.
+
+1. Log into Thanat's PC with his username `thanatv@thaicom.net` and his password
+2. Open Visual Studio 2010
+3. In the recent projects panel, select 'cedweb'. This will bring you to the all codes of CTP website project
+4. Edit the source code as you want
+5. On the rightmost panel, which lists all the files in the project, right click at the project name 'cedweb' and select 'Publish'.
+6. The box with FTP parameters will appear (parameters are recorded), select OK to publish all files (will overwrite what is already on the server) via FTP.
+
+###List of problems which could be solved by editing the source code
+
+* **Add email in the email alert list when new CTP-R comes to our system**
+
+1. Open project.
+2. On the file list panel, go to Domains >> Ipstar >> Emails >> RequestNotificationMail.cs
+3. On the line 21, you will see `Recipients.Add(Global.CtpDept.Email);`, which is CSD's email. Add the same code for your emails such as `Recipients.Add("thanatv@thaicom.net");` underneath.
+
+* **Add email in the email alert list when new CTP-R is approved.**
+
+1. Open project.
+2. On the file list panel, go to Domains >> Ipstar >> Emails >> ApproveCtprNotificationMail.cs
+3. On the line 15, you will see `Recipients.Add(Global.CtpDept.Email);`, which is CSD's email. Add the same code for your emails such as `Recipients.Add("thanatv@thaicom.net");` underneath.
+
+* **Add email in the email alert list when CTP is completed.**
+
+1. Open project.
+2. On the file list panel, go to Domains >> Ipstar >> Emails >> CTPSubmissionMail.cs
+3. On the line 15, you will see `Recipients.Add(Global.CtpDept.Email);`, which is CSD's email. Add the same code for your emails such as `Recipients.Add("thanatv@thaicom.net");` underneath.
+
+* **Add email in the email alert list for weekly expired carrier reminder**
+
+1. Open project.
+2. On the file list panel, go to Domains >> Ipstar >> Emails >> ExpiredCarriersReminderMail.cs
+3. On the line 37 and 62, you will see `Recipients.Add(Global.CtpDept.Email);`, which is CSD's email. Add the same code for your emails such as `Recipients.Add("thanatv@thaicom.net");` underneath.
+
+**Don't forget to publish to FTP after finish code editing.**
+
+
+    {{/markdownManual}}
+</template>

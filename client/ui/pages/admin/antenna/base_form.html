@@ -1,0 +1,87 @@
+<template name="antennaBaseForm">
+    <form class="form-horizontal" role="form">
+
+        {{#formGroup title="Name"}}
+        {{#if view_mode}}
+        {{#static}}{{name}}{{/static}}
+        {{else}}
+        <input type="text" class="form-control" id="name" placeholder="Name" value="{{name}}">
+        {{/if}}
+        {{/formGroup}}
+
+        {{#formGroup title="Vendor"}}
+        {{#if view_mode}}
+        {{#static}}{{vendor}}{{/static}}
+        {{else}}
+        {{> dropdown _id="vendor" choices=vendors selected=vendor}}
+        <p class="help-block">If the vendor is not in the dropdown, add it <a href="{{pathFor 'antennaVendorInsert'}}">here</a>.</p>
+        {{/if}}
+        {{/formGroup}}
+
+        {{#formGroup title="Size (m)"}}
+        {{#if view_mode}}
+        {{#static}}{{size}}{{/static}}
+        {{else}}
+        <input type="number" min="0" step="0.01" class="form-control" id="size" placeholder="Antenna size" value="{{size}}">
+        {{/if}}
+        {{/formGroup}}
+
+        {{#formGroup title=""}}
+        {{#static}}If Rx Gain, Tx Gain and mid-band frequency are given, the program will use this value instead of standard antenna gain formula.{{/static}}
+        {{/formGroup}}
+
+        {{#formGroup title="Rx Gain (dBi)"}}
+        {{#if view_mode}}
+        {{#static}}{{rx_gain.value}}{{/static}}
+        {{else}}
+        <input type="number" step="0.01" class="form-control" id="rx_gain_value" placeholder="Rx Gain" value="{{rx_gain.value}}">
+        {{/if}}
+        {{/formGroup}}
+
+        {{#formGroup title="Rx Mid-band frequency (GHz)"}}
+        {{#if view_mode}}
+        {{#static}}{{rx_gain.freq}}{{/static}}
+        {{else}}
+        <input type="number" step="0.01" class="form-control" id="rx_gain_freq" placeholder="Rx mid-band frequency" value="{{rx_gain.freq}}">
+        {{/if}}
+        {{/formGroup}}
+
+        {{#formGroup title="Tx Gain (dBi)"}}
+        {{#if view_mode}}
+        {{#static}}{{tx_gain.value}}{{/static}}
+        {{else}}
+        <input type="number" step="0.01" class="form-control" id="tx_gain_value" placeholder="Tx Gain" value="{{tx_gain.value}}">
+        {{/if}}
+        {{/formGroup}}
+
+        {{#formGroup title="Tx Mid-band frequency (GHz)"}}
+        {{#if view_mode}}
+        {{#static}}{{tx_gain.freq}}{{/static}}
+        {{else}}
+        <input type="number" step="0.01" class="form-control" id="tx_gain_freq" placeholder="Tx mid-band frequency" value="{{tx_gain.freq}}">
+        {{/if}}
+        {{/formGroup}}
+
+        {{#formGroup title=""}}
+        {{#static}}If G/T is given, the program will use this value instead of standard antenna gain formula and the given Rx Gain above. (overrides all){{/static}}
+        {{/formGroup}}
+
+        {{#formGroup title="G/T (dB/K)"}}
+        {{#if view_mode}}
+        {{#static}}{{gt}}{{/static}}
+        {{else}}
+        <input type="number" step="0.01" class="form-control" id="gt" placeholder="G/T" value="{{gt}}">
+        {{/if}}
+        {{/formGroup}}
+
+        {{#formGroupButton}}
+        {{#if view_mode}}
+        <a class="btn btn-primary" href="{{pathFor 'antennaViewAll'}}">View all antennas</a>
+        <a class="btn btn-success" href="{{pathFor 'antennaInsert'}}">Add new antenna</a>
+        {{else}}
+        <button type="submit" class="btn btn-primary">Submit</button>
+        {{/if}}
+        {{/formGroupButton}}
+
+    </form>
+</template>

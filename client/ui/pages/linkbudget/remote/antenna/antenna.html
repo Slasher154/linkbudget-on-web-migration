@@ -1,0 +1,18 @@
+<template name="antenna">
+
+
+            {{#if isBroadband}}
+            <!-- Show recommend antenna only if max contour is not selected -->
+            {{#if findMaxContour}}
+            {{else}}
+            <!-- Disable recommend antenna as of now
+            {{> recommendAntenna}}
+            -->
+            {{/if}}
+            {{/if}}
+            {{#if recommendAntenna}} <!-- Do not show antenna selection if recommend antenna is ticked -->
+            {{else}}
+            {{> pickAntenna}}
+            {{/if}}
+
+</template>

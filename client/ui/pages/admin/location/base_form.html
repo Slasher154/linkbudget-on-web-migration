@@ -1,0 +1,119 @@
+<template name="locationBaseForm">
+    <form class="form-horizontal" role="form">
+        <!-- Name -->
+        {{#formGroup title="Name"}}
+        {{#if view_mode}}
+        {{#static}}{{name}}{{/static}}
+        {{else}}
+        <input type="text" class="form-control" id="name" placeholder="Name" value="{{name}}">
+        {{/if}}
+        {{/formGroup}}
+        <!-- Country -->
+        {{#formGroup title="Country"}}
+        {{#if view_mode}}
+        {{#static}}{{country}}{{/static}}
+        {{else}}
+        <input type="text" class="form-control" id="country" placeholder="Country" value="{{country}}">
+        {{/if}}
+        <!-- City -->
+        {{/formGroup}}
+        {{#formGroup title="City"}}
+        {{#if view_mode}}
+        {{#static}}{{city}}{{/static}}
+        {{else}}
+        <input type="text" class="form-control" id="city" placeholder="City" value="{{city}}">
+        {{/if}}
+        {{/formGroup}}
+        <!-- Latitude -->
+        {{#formGroup title="Latitude"}}
+        {{#if view_mode}}
+        {{#static}}{{lat}}{{/static}}
+        {{else}}
+        <input type="number" min="-90" max="90" step="0.0001" class="form-control" id="lat" placeholder="Latitude" value="{{lat}}">
+        {{/if}}
+        {{/formGroup}}
+        <!-- Longitude -->
+        {{#formGroup title="Longitude"}}
+        {{#if view_mode}}
+        {{#static}}{{lon}}{{/static}}
+        {{else}}
+        <input type="number" min="-180" max="180" step="0.001" class="form-control" id="lon" placeholder="Longitude" value="{{lon}}">
+        {{/if}}
+        {{/formGroup}}
+        <!-- Location Data -->
+        {{#if view_mode}}
+        {{#formGroup title="EIRP,G/T"}}
+            <table class="table table-condensed">
+                <thead>
+                <tr>
+                    <th>Satellite</th>
+                    <th>Beam</th>
+                    <th>Type</th>
+                    <th>Value</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {{#each data}}
+                    <tr>
+                        <td>{{satellite}}</td>
+                        <td>{{beam}}</td>
+                        <td>{{showType type}}
+
+
+                        </td>
+                        <td>{{value}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        {{/formGroup}}
+        {{else}}
+        <div class="form-group mcg-title">
+            <label  class="col-sm-2 control-label">MCG</label>
+            <div class="col-sm-2"><strong>Satellite</strong>
+            </div>
+            <div class="col-sm-2"><strong>Beam</strong>
+            </div>
+            <div class="col-sm-2"><strong>Type</strong>
+            </div>
+            <div class="col-sm-2"><strong>Value</strong></div>
+            <div class="col-sm-2"><strong>Remove</strong></div>
+        </div>
+        {{#each data}}
+            {{ >locationDataBaseForm this}}
+        {{/each}}
+        {{#formGroupButton}}
+        <button class="btn btn-info add-data">Add Data</button>
+        {{/formGroupButton}}
+        {{/if}}
+        {{#if view_mode}}
+        <a class="btn btn-primary" href="{{pathFor 'locationViewAll'}}">View all locations</a>
+        <a class="btn btn-success" href="{{pathFor 'locationInsert'}}">Add new location</a>
+        {{else}}
+        {{#formGroupButton}}
+        <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+        {{/formGroupButton}}
+        {{/if}}
+    </form>
+</template>
+
+<template name="locationDataBaseForm">
+    <div class="form-group data-form">
+        <label  class="col-sm-2 control-label"></label>
+        <div class="col-sm-2">
+            {{> dropdown class="satellite" choices=satellites selected=satellite}}
+        </div>
+        <div class="col-sm-2 beam-div">
+            {{> dropdown class="beam" choices=beams selected=beam}}
+        </div>
+        <div class="col-sm-2">
+            {{> dropdown class="type" choices=types selected=type}}
+        </div>
+        <div class="col-sm-2">
+            <input type="number" step="0.01" class="form-control value" placeholder="Value" value="{{value}}">
+        </div>
+        <div class="col-sm-2">
+            <button class="btn btn-danger remove-data">Remove</button>
+        </div>
+    </div>
+</template>

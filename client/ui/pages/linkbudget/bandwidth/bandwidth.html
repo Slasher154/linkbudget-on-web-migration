@@ -1,0 +1,69 @@
+<template name="bandwidth">
+    <form role="form">
+        <fieldset>
+            <legend>Bandwidth</legend>
+            {{#if isAnyPlatformSelected}}
+            <div class="form-group">
+                <label>Unit</label>
+                <select class="form-control" id="bwUnitPicker">
+                    <option value="">Please select unit</option>
+                    <option value="kbps">Data rate (kbps)</option>
+                    <option value="Mbps">Data rate (Mbps)</option>
+                    <option value="ksps">Symbol rate (ksps)</option>
+                    <option value="Msps">Symbol rate (Msps)</option>
+                    <option value="kHz">Bandwidth (kHz)</option>
+                    <option value="MHz">Bandwidth (MHz)</option>
+                </select>
+
+            </div>
+
+            <div class="form-group">
+                {{#if isModemSelected}}
+                <label>Value (FWD/RTN)</label>
+                {{else}}
+                <label>Value</label>
+                {{/if}}
+                <div id="bwValue">
+                    {{#if isBc}}
+                    {{#if isBcPlatformSelected}}
+                    <input type="number" class="form-control oneWayBw" placeholder="Input your value">
+                    {{/if}}
+                    {{else}}
+                    {{#if isModemSelected}}
+                    <div id="bwRows">
+                        <div class="rowBw">
+                            <div class="col-xs-4 " style="padding-right:2px;padding-left: 2px">
+                                <input type="text" class="form-control fwd" placeholder="">
+                            </div>
+                            <div class="col-xs-2 " style="padding-right:0px;padding-left: 0px">
+                                <input type="text" class="form-control" placeholder="/" disabled>
+                            </div>
+                            <div class="col-xs-4" style="padding-right:2px;padding-left: 2px">
+                                <input type="text" class="form-control rtn" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+
+                    <div class="form-group">
+                        <button class="btn btn-success btn-sm" id="addBw"><span
+                                class="glyphicon glyphicon-plus"> Add</span>
+                        </button>
+                        {{#if showRemove}}
+                        <button class="btn btn-danger btn-sm" id="removeBw"><span
+                                class="glyphicon glyphicon-minus"> Remove</span></button>
+                        {{/if}}
+
+                    </div>
+
+
+                    {{/if}}
+                    {{/if}}
+                </div>
+
+            </div>
+            {{/if}}
+        </fieldset>
+    </form>
+</template>

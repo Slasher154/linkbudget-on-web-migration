@@ -1,0 +1,126 @@
+<template name="panelPrimary">
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title"><span class="glyphicon glyphicon-{{icon}}"></span> {{title}}</h3>
+        </div>
+        <div class="panel-body">
+            {{> Template.contentBlock}}
+        </div>
+    </div>
+</template>
+
+<template name="radioButtonGroups">
+
+    <div class="btn-group" data-toggle="buttons">
+        {{#each value}}
+        <label class="btn btn-default">
+            <input type="radio" name="{{this}}" value="{{this}}"> {{this}}
+        </label>
+        {{/each}}
+    </div>
+</template>
+
+<template name="checkboxButtonGroups">
+
+    <div class="btn-group" data-toggle="buttons">
+        {{#each value}}
+        <label class="btn btn-default">
+            <input type="checkbox" name="{{this}}" value="{{this}}"> {{this}}
+        </label>
+        {{/each}}
+    </div>
+</template>
+
+<template name="inputAppend">
+    <div class="input-group">
+        <input type="{{type}}" id="{{id}}" class="form-control" placeholder="{{placeholder}}" value="{{value}}">
+        <span class="input-group-addon">{{text}}</span>
+    </div>
+</template>
+
+<template name="formGroup">
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">{{title}}</label>
+        <div class="col-sm-10">
+            {{> Template.contentBlock}}
+        </div>
+    </div>
+
+</template>
+
+<template name="formGroupButton">
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            {{> Template.contentBlock}}
+        </div>
+    </div>
+</template>
+
+<template name="formGroupCheckbox">
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" class="{{class}}" checked="{{isChecked}}"> {{text}}
+                </label>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="dropdown">
+    <select id="{{_id}}" class="form-control {{class}}">
+        {{#each choices}}
+            {{#if isEqual value ../selected}}
+                <option value="{{value}}" selected>{{text}}</option>
+            {{else}}
+                <option value="{{value}}">{{text}}</option>
+            {{/if}}
+        {{/each}}
+    </select>
+</template>
+
+<template name="databaseTable">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                {{#each rows}}
+                    <th>{{this}}</th>
+                {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+            {{> Template.contentBlock}}
+        </tbody>
+    </table>
+</template>
+
+<template name="condensedTable">
+    <table class="table table-bordered table-condensed">
+        <thead>
+        <tr>
+            {{#each rows}}
+            <th>{{this}}</th>
+            {{/each}}
+        </tr>
+        </thead>
+        <tbody>
+        {{> Template.contentBlock}}
+        </tbody>
+    </table>
+</template>
+
+<template name="static">
+    <p class="form-control-static">{{> Template.contentBlock}}</p>
+</template>
+
+<template name="markdownManual">
+    <div class="well">
+        {{#markdown}}
+        {{> Template.contentBlock}}
+        {{/markdown}}
+    </div>
+</template>
+
+

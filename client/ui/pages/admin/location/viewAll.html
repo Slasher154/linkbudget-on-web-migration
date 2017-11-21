@@ -1,0 +1,19 @@
+<template name="locationViewAll">
+    <h1>All locations</h1>
+    {{#databaseTable rows=tableRows}}
+        {{#each locations}}
+            <tr>
+                <td><a href="{{pathFor 'locationView'}}">{{name}}</a></td>
+                <td>{{country}}</td>
+                <td>{{city}}</td>
+                <td>{{lat}}</td>
+                <td>{{lon}}</td>
+                <td>
+                    <a href="{{pathFor 'locationView'}}"><i class="glyphicon glyphicon-search"></i></a>
+                    <a href="{{pathFor 'locationEdit'}}"><i class="glyphicon glyphicon-edit"></i></a>
+                    <a href="#" value={{_id}} class="remove"><i class="glyphicon glyphicon-remove"></i></a>
+                </td>
+            </tr>
+        {{/each}}
+    {{/databaseTable}}
+</template>

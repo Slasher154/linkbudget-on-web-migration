@@ -1,0 +1,17 @@
+<template name="modemViewAll">
+    <h1>All modems</h1>
+    {{#databaseTable rows=tableRows}}
+    {{#each modems}}
+    <tr>
+        <td><a href="{{pathFor 'modemView' _id=_id}}">{{name}}</a></td>
+        <td>{{vendor}}</td>
+        <td>
+            <a href="{{pathFor 'modemView' _id=_id}}"><i class="glyphicon glyphicon-search"></i></a>
+            <a href="{{pathFor 'modemEdit' _id=_id}}"><i class="glyphicon glyphicon-edit"></i></a>
+            <a href="{{pathFor 'modemDuplicate' _id=_id}}"><i class="glyphicon glyphicon-paperclip"></i></a>
+            <a href="#" value={{_id}} class="remove"><i class="glyphicon glyphicon-remove"></i></a>
+        </td>
+    </tr>
+    {{/each}}
+    {{/databaseTable}}
+</template>

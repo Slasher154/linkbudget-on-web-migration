@@ -1,0 +1,13 @@
+<template name="antennaVendorViewAll">
+    <h1>All Antenna Vendors</h1>
+    {{#databaseTable rows=tableRows}}
+    {{#each antenna_vendors}}
+    <tr>
+        <td>{{name}}</td>
+        <td>
+            <a href="#" value={{_id}} class="remove"><i class="glyphicon glyphicon-remove"></i></a>
+        </td>
+    </tr>
+    {{/each}}
+    {{/databaseTable}}
+</template>

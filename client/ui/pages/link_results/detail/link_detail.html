@@ -1,0 +1,331 @@
+<template name="linkDetail">
+{{#if subsReady 'myRequest'}}
+    <h2>Link from Hub to Remote</h2>
+    {{> linkDetailTable fwd}}
+    <hr>
+    {{#if isNotEmpty rtn}}
+    <h2>Link from Remote to Hub</h2>
+    {{> linkDetailTable rtn}}
+    {{/if}}
+{{/if}}
+
+</template>
+
+<template name="linkDetailTable">
+<!-- Summary -->
+{{#with this.[0]}}
+<div class="col-sm-12">
+    <h5>Summary</h5>
+    {{#condensedTable rows=summaryRows}}
+    <tr>
+        <td>{{cn_total}}</td>
+        <td>{{mcg.name}}</td>
+        <td>{{mcg.es_no}}</td>
+        <td>{{ebNo mcg}}</td>
+        <td>{{link_margin}}</td>
+        <td>{{required_margin}}</td>
+        {{#if pass}}
+        <td class="success">Pass</td>
+        {{else}}
+        <td class="danger">Fail</td>
+        {{/if}}
+        <td>{{occupied_bandwidth}}</td>
+        <td>{{data_rate}}</td>
+        <td>{{power_util_percent}}</td>
+        <td>{{operating_hpa_power}}</td>
+        {{#with ../[1]}}
+        <td>{{uplink_availability}}</td>
+        <td>{{downlink_availability}}</td>
+        <td>{{link_availability}}</td>
+        {{/with}}
+    </tr>
+    {{/condensedTable}}
+</div>
+<!-- Uplink -->
+<div class="col-sm-3">
+    <h5>Uplink</h5>
+    {{#condensedTable rows=tableRows}}
+    <tr>
+        <td>Antenna Size</td>
+        <td>{{uplink_antenna.size}}</td>
+        <td>m</td>
+    </tr>
+    <tr>
+        <td>Uplink Location</td>
+        <td>{{uplink_location.name}}</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>EIRP Up</td>
+        <td>{{uplink_eirp}}</td>
+        <td>dBW/m^2</td>
+    </tr>
+    <tr>
+        <td>G/T at uplink location</td>
+        <td>{{uplink_gt}}</td>
+        <td>dB/K</td>
+    </tr>
+    <tr>
+        <td>Path Loss</td>
+        <td>{{uplink_path_loss}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>Pointing Loss</td>
+        <td>{{uplink_pointing_loss}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>X-Pol Loss</td>
+        <td>{{uplink_xpol_loss}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>ATM Loss (Clear)</td>
+        <td>{{uplink_atmLoss}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>Noise Bandwidth</td>
+        <td>{{noise_bandwidth}}</td>
+        <td>MHz</td>
+    </tr>
+    <tr>
+        <td>C/N Up</td>
+        <td>{{cn_uplink}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>ATM Loss (Rain)</td>
+        <td>{{../[1].uplink_atmLoss}}</td>
+        <td>dB</td>
+    </tr>
+    {{/condensedTable}}
+</div>
+<!-- Satellite -->
+<div class="col-sm-3">
+    <h5>Satellite</h5>
+    {{#condensedTable rows=tableRows}}
+    <tr>
+        <td>Channel</td>
+        <td>{{channel}}</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Operating Mode</td>
+        <td>{{operating_mode}}</td>
+        <td></td>
+    </tr>
+    {{#if isEqual "FGM" operating_mode}}
+    <tr>
+        <td>Channel IBO</td>
+        <td>{{channel_input_backoff}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>Channel OBO</td>
+        <td>{{channel_output_backoff}}</td>
+        <td>dB</td>
+    </tr>
+
+
+    {{else}}
+    <tr>
+        <td>Channel OBO</td>
+        <td>{{channel_output_backoff}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>Channel deepin at Full-Load</td>
+        <td>{{channel_deepin}}</td>
+        <td>dB</td>
+    </tr>
+    {{/if}}
+    <tr>
+        <td>Operating SFD @ Location @ Atten</td>
+        <td>{{operating_sfd}}</td>
+        <td>dBW/m^2</td>
+    </tr>
+    <tr>
+        <td>Operating PFD per carrier @desired level</td>
+        <td>{{operating_pfd_per_carrier}}</td>
+        <td>dBW/m^2</td>
+    </tr>
+    <tr>
+        <td>Real carrier PFD</td>
+        <td>{{carrier_pfd}}</td>
+        <td>dBW/m^2</td>
+    </tr>
+    <tr>
+        <td>Gain variation</td>
+        <td>{{gain_variation}}</td>
+        <td>dB</td>
+    </tr>
+    {{/condensedTable}}
+</div>
+<!-- Downlink -->
+<div class="col-sm-3">
+    <h5>Downlink</h5>
+    {{#condensedTable rows=tableRows}}
+    <tr>
+        <td>Downlink Location</td>
+        <td>{{downlink_location.name}}</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Antenna Size</td>
+        <td>{{downlink_antenna.size}}</td>
+        <td>m</td>
+    </tr>
+    <tr>
+        <td>Antenna Gain</td>
+        <td>{{ant_gain}}</td>
+        <td>dBi</td>
+    </tr>
+    <tr>
+        <td>System Temperature</td>
+        <td>{{system_temp}}</td>
+        <td>K</td>
+    </tr>
+    <tr>
+        <td>Antenna G/T</td>
+        <td>{{downlink_gt}}</td>
+        <td>dB/K</td>
+    </tr>
+    <tr>
+        <td>Saturated EIRP at location</td>
+        <td>{{saturated_eirp_at_loc}}</td>
+        <td>dBW</td>
+    </tr>
+    <tr>
+        <td>OBO per carrier</td>
+        <td>{{carrier_obo}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>Path Loss</td>
+        <td>{{downlink_path_loss}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>Pointing Loss</td>
+        <td>{{downlink_pointing_loss}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>X-pol Loss</td>
+        <td>{{downlink_xpol_loss}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>ATM Loss (Clear)</td>
+        <td>{{downlink_atmLoss}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>Noise bandwidth</td>
+        <td>{{noise_bandwidth}}</td>
+        <td>MHz</td>
+    </tr>
+    <tr>
+        <td>C/N Downlink</td>
+        <td>{{cn_downlink}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>ATM Loss (Rain)</td>
+        <td>{{../[1].downlink_atmLoss}}</td>
+        <td>dB</td>
+    </tr>
+    {{/condensedTable}}
+</div>
+<!-- Carrier -->
+<div class="col-sm-3">
+    <h5>Carrier</h5>
+    {{#condensedTable rows=tableRows}}
+    <tr>
+        <td colspan="3"><strong>Clear sky</strong></td>
+    </tr>
+    <tr>
+        <td>C/N UL</td>
+        <td>{{cn_uplink}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>C/I UL Intermod</td>
+        <td>{{ci_uplink_intermod}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>C/I UL Adj.sat</td>
+        <td>{{ci_uplink_adj_sat}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>C/I UL Xpol</td>
+        <td>{{ci_uplink_xpol}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>C/I UL XCells</td>
+        <td>{{ci_uplink_xcells}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>C/I DL Intermod</td>
+        <td>{{ci_downlink_intermod}}</td>
+        <td>dB</td>
+    </tr>
+
+    {{#each ci_downlink_adj_sat_obj}}
+    <tr>
+        <td>C/I DL Adj.Sat: {{name}}</td>
+        <td>{{value}}</td>
+        <td>dB</td>
+    </tr>
+    {{/each}}
+    <tr>
+        <td>C/I DL X-pol</td>
+        <td>{{ci_downlink_xpol}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>C/I DL X-Cells</td>
+        <td>{{ci_downlink_xcells}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>C/N Total</td>
+        <td>{{cn_total}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td colspan="3"><strong>Rain Fade</strong></td>
+    </tr>
+    {{#with ../[1]}}
+    <tr>
+        <td>C/N UL</td>
+        <td>{{cn_uplink}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>C/N DL</td>
+        <td>{{cn_downlink}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>C/N Total</td>
+        <td>{{cn_total}}</td>
+        <td>dB</td>
+    </tr>
+    <tr>
+        <td>Link Margin</td>
+        <td>{{link_margin}}</td>
+        <td>dB</td>
+    </tr>
+    {{/with}}
+    {{/condensedTable}}
+
+</div>
+{{/with}}
+</template>

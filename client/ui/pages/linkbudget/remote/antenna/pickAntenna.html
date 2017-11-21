@@ -1,0 +1,21 @@
+<template name="pickAntenna">
+    {{#if isBroadband}}
+    <div class="form-group">
+
+        <label>Select Antenna</label>
+        <br/>
+        <select class="form-control" id="antennaPicker" multiple>
+            <!-- Antenna selector is rendered in the js script -->
+        </select>
+
+    </div>
+    {{/if}}
+    {{#if isConventional}}
+    <div class="form-group">
+
+        <label>Antenna Size</label>
+        {{> inputAppend text="m" type="number" id="remote-size" value=3.8 placeholder="Input antenna size"}}
+
+    </div>
+    {{/if}}
+</template>
